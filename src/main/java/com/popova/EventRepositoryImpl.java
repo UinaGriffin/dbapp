@@ -27,7 +27,7 @@ public class EventRepositoryImpl implements EventRepository {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, event.getUserId());
             preparedStatement.setString(2, event.getEventType().toString());
-            preparedStatement.setDate(3, new Date(event.getTimeStamp().getTime()));
+            preparedStatement.setTimestamp(3, new Timestamp(event.getTimeStamp().getTime()));
             preparedStatement.executeUpdate();
 
         } catch (SQLException se) {

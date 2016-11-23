@@ -1,9 +1,6 @@
 package com.popova;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class EventServiceImpl implements EventService {
     public static final int NUMBER_OF_FAKE_EVENTS = 50;
@@ -16,12 +13,12 @@ public class EventServiceImpl implements EventService {
 
 
     public void generateFakeDataSet() {
-        List<Event> events = generateFakeEvents();
+        Set<Event> events = generateFakeEvents();
         saveEvents(events);
     }
 
-    private List<Event> generateFakeEvents() {
-        List<Event> events = new ArrayList<Event>();
+    private Set<Event> generateFakeEvents() {
+        Set<Event> events = new HashSet<Event>();
         for (int i = 0; i < NUMBER_OF_FAKE_EVENTS; i++) {
             Event event = generateFakeEvent();
             events.add(event);
@@ -39,7 +36,8 @@ public class EventServiceImpl implements EventService {
         int eventTypeIndex=rand.nextInt(values.length);
         Event.EventType eventType = values[eventTypeIndex];
 
-        Date fakeDate = new Date();
+        long fakeDateLong = new Date().getTime()-userId;
+        Date fakeDate = new Date(fakeDateLong);
 
 
         Event fakeEvent = new Event();
@@ -50,7 +48,7 @@ public class EventServiceImpl implements EventService {
         return fakeEvent;
     }
 
-    private void saveEvents(List<Event> events) {
+    private void saveEvents(Set<Event> events) {
         for (Event event : events) {
             eventRepository.saveEvent(event);
         }

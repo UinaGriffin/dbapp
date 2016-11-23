@@ -37,4 +37,25 @@ public class Event {
     public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Event event = (Event) o;
+
+        if (userId != event.userId) return false;
+        if (eventType != event.eventType) return false;
+        return !(timeStamp != null ? !timeStamp.equals(event.timeStamp) : event.timeStamp != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userId;
+        result = 31 * result + (eventType != null ? eventType.hashCode() : 0);
+        result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
+        return result;
+    }
 }
